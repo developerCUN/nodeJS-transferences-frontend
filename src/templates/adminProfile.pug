@@ -1,0 +1,158 @@
+extends partial/layout.pug
+
+block content
+  .profile-admin
+    h1 Perfil de Administrador 
+  .profile-data.row
+    .img-info
+      img.photo(src='https://picsum.photos/200/300' alt='photo')
+    .profile-info
+      p
+        br
+        b Identificaci&oacute;n:
+        span#prof_id
+        br
+        b Nombres:
+        span#prof_nombres
+        br
+        b Apellidos:
+        span#prof_apellidos
+        br
+        b Email:
+        span#prof_email
+        br
+        b Telefono:
+        span#prof_telefono
+        br
+        b Cargo:
+        span#prof_cargo
+        br
+        b Seccion CUN:
+        span#prof_cod_secc
+        br
+        b Sede CUN:
+        span#prof_cod_sede
+      button.btn.btn-dark(data-toggle='modal' data-target='#updateModal') Actualizar
+      button.btn.btn-danger(onclick='') Cerrar Sesion
+  // Last Transferencec Assigned
+  // Current Process
+  h3 Datos de Proceso Actual
+  .row
+  .col
+    p
+      br
+      b Tipo de Transferencia:
+      span#transf_tipo
+      br
+      b Estado:
+      span#transf_estado
+      br
+      b Proceso comenzado:
+      span#transf_creado
+      br
+      b Codigo de Modalidad:
+      span#transf_cod_modalidad
+      br
+      b Codigo de Seccion:
+      span#transf_cod_secc
+      br
+      b Codigo de Sede:
+      span#transf_cod_sede
+      br
+      b Codigo de Programa:
+      span#transf_cod_programa
+      br
+      b Codigo de Plan de estudios:
+      span#transf_cod_plan
+  .col
+    h5 Archivos
+    p
+      b
+        | Carta de Tranferencia:
+        button.btn.btn-info(onclick='' disabled='') Ver
+    p
+      b Notas:
+      button.btn.btn-info(onclick='' disabled='') Ver
+      button.btn.btn-dark(onclick='') Actualizar
+    p
+      b Formato nmaf05:
+      button.btn.btn-info(onclick='' disabled='') Ver
+    p
+      b Formato nmaf06:
+      button.btn.btn-info(onclick='' disabled='') Ver
+    p
+      b Formato nmaf15:
+      button.btn.btn-info(onclick='' disabled='') Ver
+  .tranference-actions.col
+  button.btn.btn-dark(data-toggle='modal' data-target='#assignementModal') Reasignar Encargado
+  button.btn.btn-info(onclick="window.location.href='transfManagers.html'") Ver Encargados
+  button.btn.btn-info(onclick="window.location.href='homologations.html'" disabled='') Asignar Materias Homologadas
+  .subjects-studied
+  h1 Materias Vistas por el usuario
+  p Adicion al sistema de materias vistas por el usuario:
+  h3 Materias Agregadas
+  // Subject Data
+  .transferences-data.row
+    table.table.table-striped
+      thead
+        tr
+          th(scope='col') Codigo
+          th(scope='col') Nombre
+          th(scope='col') Creditos
+          th(scope='col') Institucion
+          th(scope='col') Programa
+          th(scope='col') Modalidad
+      tbody#subjectTransf
+  // Update assignement Modal
+  #assignementModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='updateModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Update Data
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body
+        p Ingrese identificacion de usuario a asignar:
+        p
+          | Identificaci&oacute;n:
+          input#asignado(type='text' size='40' placeholder='C.C. 000000')
+        p
+          | Si no ingresa un numero de identificacion determinado, el sistema hara la reasignacion.
+      .modal-footer
+        button.btn.btn-danger(type='button' data-dismiss='modal') Cerrar
+        button.btn.btn-dark(onclick='assignManager(idTestTransf)') Enviar
+  // Transferences Data
+  .transferences-data.row
+  h3 Transferencias Asignadas
+  .transferences-data.row
+    table.table.table-striped
+      thead
+        tr
+          th(scope='col') Fecha de Asignacion
+          th(scope='col') Asignador
+          th(scope='col') Asignado (Identificacion)
+      tbody#transfAdmin
+  // Update Modal
+  #updateModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='updateModalLabel' aria-hidden='true')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Update Data
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      .modal-body
+        .sign-user
+          p#upt_form
+          p
+            | Imagen:
+            input#upt_imagen(type='file' name='file' required='')
+          p Si desea modificar su contrase&ntilde;a ingrese los siguientes campos:
+          p
+            | Contrase&ntilde;a:
+            input#upt_password(type='password' size='40' placeholder='********')
+          p
+            | Confirme su contrase&ntilde;a:
+            input#upt_conf_password(type='password' size='40' placeholder='********')
+      .modal-footer
+        button.btn.btn-danger(type='button' data-dismiss='modal') Cerrar
+        button.btn.btn-dark(onclick='updateData(idTestAdmin)') Enviar

@@ -1,0 +1,170 @@
+extends partial/layout.pug
+
+block content
+  .profile-user
+    h1 Perfil de Usuario 
+    .profile-data.row
+      .img-info
+        img.photo(src='https://picsum.photos/200/300' alt='photo')
+      .profile-info
+        p
+          br
+          b Identificaci&oacute;n:
+          | #{id}
+          br
+          b Nombres:
+          | #{nombres}
+          br
+          b Apellidos:
+          | #{apellidos}
+          br
+          b Email:
+          | #{email}
+          br
+          b Telefono:
+          | #{telefono}
+          br
+          b Institucion de Origen:
+          | #{institucion_origen}
+          br
+          b Programa de Origen:
+          | #{programa_origen}
+        button.btn.btn-dark(data-toggle='modal' data-target='#updateModal') Actualizar
+        button.btn.btn-danger(onclick='') Cerrar Sesion
+  // Last Transference Data
+  h3 Procesos de Transferencias
+  .tranferences-actions
+    p
+      button.btn.btn-dark(data-toggle='modal' data-target='#createTransfModal') Crear Transferencia
+    p
+      button.btn.btn-dark(onclick="window.location.href='userTransferences.html'") Ver todos los procesos
+  .transferences-data.row
+    .col
+      p
+        br
+        b Tipo de Transferencia:
+        span#transf_tipo
+        br
+        b Estado:
+        span#transf_estado
+        br
+        b Proceso comenzado:
+        span#transf_creado
+        br
+        b Codigo de Modalidad:
+        span#transf_cod_modalidad
+        br
+        b Codigo de Seccion:
+        span#transf_cod_secc
+        br
+        b Codigo de Sede:
+        span#transf_cod_sede
+        br
+        b Codigo de Programa:
+        span#transf_cod_programa
+        br
+        b Codigo de Plan de estudios:
+        span#transf_cod_plan
+      button.btn.btn-danger(onclick='endTransference(idTestTransf)' type='button') Eliminar Proceso
+    .col
+      h5 Archivos
+      p
+        b
+          | Carta de Tranferencia: 
+          button.btn.btn-info(onclick='') Ver
+      p
+        b Notas:
+        button.btn.btn-info(onclick='') Ver
+      p
+        b Formato nmaf05:
+        button.btn.btn-info(onclick='') Ver
+      p
+        b Formato nmaf06:
+        button.btn.btn-info(onclick='') Ver
+      p
+        b Formato nmaf15:
+        button.btn.btn-info(onclick='') Ver
+  // Update User Modal
+  #updateModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='updateModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Update Data
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          .sign-user
+            p#upt_form
+            p
+              | Imagen:
+              input#upt_imagen(type='file' name='file' required='')
+            p Si desea modificar su contrase&ntilde;a ingrese los siguientes campos:
+            p
+              | Contrase&ntilde;a:
+              input#upt_password(type='password' size='40' placeholder='********')
+            p
+              | Confirme su contrase&ntilde;a:
+              input#upt_conf_password(type='password' size='40' placeholder='********')
+        .modal-footer
+          button.btn.btn-danger(type='button' data-dismiss='modal') Cerrar
+          button.btn.btn-dark(onclick='updateData(idTestUser)') Enviar
+  // Create Transference Modal
+  #createTransfModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='crateTransfModal' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Crear Transferencia
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          .register-transference
+            p
+              | Programa:
+              select#trans_cod_programa
+            p
+              | Tipo de Transferencia:
+              select#trans_tipo
+            p
+              | Codigo de Modalidad:
+              select#trans_cod_modalidad
+            p
+              | Semestre:
+              input#trans_semestre(type='text' value='')
+            p
+              | Plan de Estudios:
+              select#trans_cod_plan
+            p
+              | Seccion CUN:
+              select#trans_cod_secc
+            p
+              | Sede CUN:
+              select#trans_cod_sede
+            p
+              | Carta:
+              input#trans_transf_carta(type='file' name='file' required='')
+            p
+              | Certificado de Notas:
+              input#trans_notas(type='file' name='file' required='')
+            p
+              | Diligencie el formato CSV, con las notas correspondientes:
+              input#trans_csv_notas(type='file' name='file' required='')
+        .modal-footer
+          button.btn.btn-danger(type='button' data-dismiss='modal') Cerrar
+          button.btn.btn-dark(type='button' onclick='addTransf(idTestUser)') Enviar
+  .tranference-actions.col
+    button.btn.btn-dark(data-toggle='modal' data-target='#assignementModal') Actualizar Documentos
+  // Update Documents Modal
+  #assignementModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='updateModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Agregar Documentos
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          p Actualiza los documentos de tu proceso de transferencia:
+          h5 Documentos:
+          p#docs_field
+        .modal-footer
+          button.btn.btn-danger(type='button' data-dismiss='modal') Cerrar
+          button.btn.btn-dark(onclick='updateFileData(idTestUser)') Enviar
